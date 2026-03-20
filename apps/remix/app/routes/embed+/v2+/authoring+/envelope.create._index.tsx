@@ -318,6 +318,7 @@ const EnvelopeCreatePage = ({ embedAuthoringOptions }: EnvelopeCreatePageProps) 
       envelopeId: '',
       email: recipient.email,
       name: recipient.name,
+      phoneNumber: null,
       role: recipient.role,
       token: '',
       readStatus: ReadStatus.NOT_OPENED,
