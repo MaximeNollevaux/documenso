@@ -105,7 +105,6 @@ export const ZEnvelopeForSigningResponse = z.object({
     signingStatus: true,
     email: true,
     name: true,
-    phoneNumber: true,
     documentDeletedAt: true,
     expiresAt: true,
     expirationNotifiedAt: true,
@@ -115,6 +114,7 @@ export const ZEnvelopeForSigningResponse = z.object({
     signingOrder: true,
     rejectionReason: true,
   }).extend({
+    phoneNumber: z.string().nullable().optional(),
     directToken: z.string().nullish(),
     fields: ZFieldSchema.omit({
       documentId: true,
