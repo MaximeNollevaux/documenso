@@ -1,0 +1,1 @@
+export const TWO_FACTOR_SMS_EXPIRATION_MINUTES = 5;

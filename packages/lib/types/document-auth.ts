@@ -37,7 +37,7 @@ const ZDocumentAuthPasswordSchema = z.object({
 const ZDocumentAuth2FASchema = z.object({
   type: z.literal(DocumentAuth.TWO_FACTOR_AUTH),
   token: z.string().min(4).max(10),
-  method: z.enum(['email', 'authenticator']).default('authenticator').optional(),
+  method: z.enum(['email', 'authenticator', 'sms']).default('authenticator').optional(),
 });
 
 /**

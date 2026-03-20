@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { msg } from '@lingui/core/macro';
 import { useLingui } from '@lingui/react';
 import { Trans } from '@lingui/react/macro';
-import { ArrowLeftIcon, KeyIcon, MailIcon } from 'lucide-react';
+import { ArrowLeftIcon, KeyIcon, MailIcon, SmartphoneIcon } from 'lucide-react';
 import { DateTime } from 'luxon';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -21,7 +21,7 @@ import { useToast } from '@documenso/ui/primitives/use-toast';
 import { useRequiredDocumentSigningAuthContext } from './document-signing-auth-provider';
 
 type FormStep = 'method-selection' | 'code-input';
-type TwoFactorMethod = 'email' | 'authenticator';
+type TwoFactorMethod = 'email' | 'authenticator' | 'sms';
 
 const ZAccessAuth2FAFormSchema = z.object({
   token: z.string().length(6, { message: 'Token must be 6 characters long' }),
@@ -45,10 +45,13 @@ export const AccessAuth2FAForm = ({ onSubmit, token, error }: AccessAuth2FAFormP
   const { _ } = useLingui();
   const { toast } = useToast();
 
-  const { user } = useRequiredDocumentSigningAuthContext();
+  const { user, recipient } = useRequiredDocumentSigningAuthContext();
 
   const { mutateAsync: request2FAEmail, isPending: isRequesting2FAEmail } =
     trpc.document.accessAuth.request2FAEmail.useMutation();
+
+  const { mutateAsync: request2FASms, isPending: isRequesting2FASms } =
+    trpc.document.accessAuth.request2FASms.useMutation();
 
   const form = useForm({
     resolver: zodResolver(ZAccessAuth2FAFormSchema),
@@ -58,6 +61,9 @@ export const AccessAuth2FAForm = ({ onSubmit, token, error }: AccessAuth2FAFormP
   });
 
   const hasAuthenticatorEnabled = user?.twoFactorEnabled === true;
+  const hasSmsEnabled = Boolean(recipient.phoneNumber);
+
+  const isRequesting = isRequesting2FAEmail || isRequesting2FASms;
 
   const onMethodSelect = async (method: TwoFactorMethod) => {
     setSelectedMethod(method);
@@ -85,6 +91,31 @@ export const AccessAuth2FAForm = ({ onSubmit, token, error }: AccessAuth2FAFormP
       }
     }
 
+    if (method === 'sms') {
+      try {
+        const result = await request2FASms({
+          token: token,
+        });
+
+        setExpiresAt(result.expiresAt);
+        setMillisecondsRemaining(result.expiresAt.valueOf() - Date.now());
+
+        setStep('code-input');
+      } catch (error) {
+        toast({
+          title: _(msg`An error occurred`),
+          description: _(
+            msg`We encountered an unknown error while attempting to send the SMS verification code. Please try again later.`,
+          ),
+          variant: 'destructive',
+        });
+
+        return;
+      }
+
+      return;
+    }
+
     setStep('code-input');
   };
 
@@ -110,15 +141,16 @@ export const AccessAuth2FAForm = ({ onSubmit, token, error }: AccessAuth2FAFormP
     setMillisecondsRemaining(null);
   };
 
-  const onResendEmail = async () => {
-    if (selectedMethod !== 'email') {
+  const onResendCode = async () => {
+    if (selectedMethod !== 'email' && selectedMethod !== 'sms') {
       return;
     }
 
     try {
-      const result = await request2FAEmail({
-        token: token,
-      });
+      const result =
+        selectedMethod === 'sms'
+          ? await request2FASms({ token: token })
+          : await request2FAEmail({ token: token });
 
       setExpiresAt(result.expiresAt);
       setMillisecondsRemaining(result.expiresAt.valueOf() - Date.now());
@@ -126,7 +158,7 @@ export const AccessAuth2FAForm = ({ onSubmit, token, error }: AccessAuth2FAFormP
       toast({
         title: _(msg`An error occurred`),
         description: _(
-          msg`We encountered an unknown error while attempting to request the two-factor authentication code. Please try again later.`,
+          msg`We encountered an unknown error while attempting to resend the verification code. Please try again later.`,
         ),
         variant: 'destructive',
       });
@@ -163,12 +195,32 @@ export const AccessAuth2FAForm = ({ onSubmit, token, error }: AccessAuth2FAFormP
           )}
 
           <div className="space-y-3">
+            {hasSmsEnabled && (
+              <Button
+                type="button"
+                variant="outline"
+                className="flex h-auto w-full justify-start gap-3 p-4"
+                onClick={async () => onMethodSelect('sms')}
+                disabled={isRequesting}
+              >
+                <SmartphoneIcon className="h-5 w-5" />
+                <div className="text-left">
+                  <div className="font-medium">
+                    <Trans>SMS verification</Trans>
+                  </div>
+                  <div className="text-muted-foreground text-sm">
+                    <Trans>We'll send a 6-digit code to your phone</Trans>
+                  </div>
+                </div>
+              </Button>
+            )}
+
             <Button
               type="button"
               variant="outline"
               className="flex h-auto w-full justify-start gap-3 p-4"
               onClick={async () => onMethodSelect('email')}
-              disabled={isRequesting2FAEmail}
+              disabled={isRequesting}
             >
               <MailIcon className="h-5 w-5" />
               <div className="text-left">
@@ -187,7 +239,7 @@ export const AccessAuth2FAForm = ({ onSubmit, token, error }: AccessAuth2FAFormP
                 variant="outline"
                 className="flex h-auto w-full justify-start gap-3 p-4"
                 onClick={async () => onMethodSelect('authenticator')}
-                disabled={isRequesting2FAEmail}
+                disabled={isRequesting}
               >
                 <KeyIcon className="h-5 w-5" />
                 <div className="text-left">
@@ -222,6 +274,11 @@ export const AccessAuth2FAForm = ({ onSubmit, token, error }: AccessAuth2FAFormP
                 We've sent a 6-digit verification code to your email. Please enter it below to
                 complete the document.
               </Trans>
+            ) : selectedMethod === 'sms' ? (
+              <Trans>
+                We've sent a 6-digit verification code to your phone via SMS. Please enter it below
+                to complete the document.
+              </Trans>
             ) : (
               <Trans>
                 Please open your authenticator app and enter the 6-digit code for this document.
@@ -235,7 +292,7 @@ export const AccessAuth2FAForm = ({ onSubmit, token, error }: AccessAuth2FAFormP
               className="space-y-4"
               onSubmit={form.handleSubmit(onFormSubmit)}
             >
-              <fieldset disabled={isRequesting2FAEmail || form.formState.isSubmitting}>
+              <fieldset disabled={isRequesting || form.formState.isSubmitting}>
                 <FormField
                   control={form.control}
                   name="token"
@@ -284,19 +341,19 @@ export const AccessAuth2FAForm = ({ onSubmit, token, error }: AccessAuth2FAFormP
                     form="access-auth-2fa-form"
                     className="w-full"
                     disabled={!form.formState.isValid}
-                    loading={isRequesting2FAEmail || form.formState.isSubmitting}
+                    loading={isRequesting || form.formState.isSubmitting}
                   >
                     <Trans>Verify & Complete</Trans>
                   </Button>
 
-                  {selectedMethod === 'email' && (
+                  {(selectedMethod === 'email' || selectedMethod === 'sms') && (
                     <Button
                       type="button"
                       variant="ghost"
                       size="sm"
                       className="w-full"
-                      onClick={onResendEmail}
-                      loading={isRequesting2FAEmail}
+                      onClick={onResendCode}
+                      loading={isRequesting}
                     >
                       <Trans>Resend code</Trans>
                     </Button>

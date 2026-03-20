@@ -582,6 +582,7 @@ model Recipient {
   envelopeId           String
   email                String        @db.VarChar(255)
   name                 String        @default("") @db.VarChar(255)
+  phoneNumber          String?       @db.VarChar(20)
   token                String
   documentDeletedAt    DateTime?
   expired              DateTime? // deprecated Not in use. To be removed in a future migration.

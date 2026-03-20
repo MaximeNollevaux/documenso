@@ -403,6 +403,7 @@ export type TGenerateDocumentFromTemplateMutationResponseSchema = z.infer<
 export const ZCreateRecipientMutationSchema = z.object({
   name: z.string().min(1),
   email: z.string().email().min(1),
+  phoneNumber: z.string().max(20).optional(),
   role: z.nativeEnum(RecipientRole).optional().default(RecipientRole.SIGNER),
   signingOrder: z.number().nullish(),
   authOptions: z

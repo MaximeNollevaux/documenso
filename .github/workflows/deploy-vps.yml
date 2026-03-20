@@ -1,0 +1,47 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        run: |
+          docker build \
+            -f ./docker/Dockerfile \
+            --progress=plain \
+            -t ghcr.io/maximenollevaux/documenso:latest \
+            -t ghcr.io/maximenollevaux/documenso:${{ github.sha }} \
+            .
+          docker push ghcr.io/maximenollevaux/documenso:latest
+          docker push ghcr.io/maximenollevaux/documenso:${{ github.sha }}
+
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_PORT }}
+          envs: GHCR_TOKEN
+          script: |
+            echo $GHCR_TOKEN | docker login ghcr.io -u maximenollevaux --password-stdin
+            cd /home/ubuntu/projects/documenso
+            docker compose pull
+            docker compose up -d --force-recreate app
+        env:
+          GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}

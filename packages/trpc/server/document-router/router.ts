@@ -1,5 +1,6 @@
 import { router } from '../trpc';
 import { accessAuthRequest2FAEmailRoute } from './access-auth-request-2fa-email';
+import { accessAuthRequest2FASmsRoute } from './access-auth-request-2fa-sms';
 import { createAttachmentRoute } from './attachment/create-attachment';
 import { deleteAttachmentRoute } from './attachment/delete-attachment';
 import { findAttachmentsRoute } from './attachment/find-attachments';
@@ -52,6 +53,7 @@ export const documentRouter = router({
 
   accessAuth: router({
     request2FAEmail: accessAuthRequest2FAEmailRoute,
+    request2FASms: accessAuthRequest2FASmsRoute,
   }),
 
   auditLog: {

@@ -176,6 +176,7 @@ export const setDocumentRecipients = async ({
           update: {
             name: recipient.name,
             email: recipient.email,
+            phoneNumber: recipient.phoneNumber,
             role: recipient.role,
             signingOrder: recipient.signingOrder,
             envelopeId: envelope.id,
@@ -187,6 +188,7 @@ export const setDocumentRecipients = async ({
           create: {
             name: recipient.name,
             email: recipient.email,
+            phoneNumber: recipient.phoneNumber,
             role: recipient.role,
             signingOrder: recipient.signingOrder,
             token: nanoid(),
@@ -365,6 +367,7 @@ type RecipientData = {
   clientId?: string | null;
   email: string;
   name: string;
+  phoneNumber?: string | null;
   role: RecipientRole;
   signingOrder?: number | null;
   accessAuth?: TRecipientAccessAuthTypes[];

@@ -23,6 +23,7 @@ export const ZUpdateEnvelopeRecipientSchema = z.object({
   id: z.number().describe('The ID of the recipient to update.'),
   email: ZRecipientEmailSchema.optional(),
   name: z.string().max(255).optional(),
+  phoneNumber: z.string().max(20).nullish(),
   role: z.nativeEnum(RecipientRole).optional(),
   signingOrder: z.number().optional(),
   accessAuth: z.array(ZRecipientAccessAuthTypesSchema).default([]).optional(),

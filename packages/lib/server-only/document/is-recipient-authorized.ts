@@ -6,6 +6,7 @@ import { match } from 'ts-pattern';
 import { prisma } from '@documenso/prisma';
 
 import { validateTwoFactorTokenFromEmail } from '../2fa/email/validate-2fa-token-from-email';
+import { validateTwoFactorTokenFromPhone } from '../2fa/sms/validate-2fa-token-from-phone';
 import { verifyTwoFactorAuthenticationToken } from '../2fa/verify-2fa-token';
 import { verifyPassword } from '../2fa/verify-password';
 import { AppError, AppErrorCode } from '../../errors/app-error';
@@ -19,7 +20,7 @@ type IsRecipientAuthorizedOptions = {
   // !: Probably find a better name than 'ACCESS_2FA' if requirements change.
   type: 'ACCESS' | 'ACCESS_2FA' | 'ACTION';
   documentAuthOptions: Envelope['authOptions'];
-  recipient: Pick<Recipient, 'authOptions' | 'email' | 'envelopeId'>;
+  recipient: Pick<Recipient, 'authOptions' | 'email' | 'envelopeId' | 'phoneNumber'>;
 
   /**
    * The ID of the user who initiated the request.
@@ -129,6 +130,19 @@ export const isRecipientAuthorized = async ({
         return await validateTwoFactorTokenFromEmail({
           envelopeId: recipient.envelopeId,
           email: recipient.email,
+          code: token,
+          window: 10, // 5 minutes worth of tokens
+        });
+      }
+
+      if (type === 'ACCESS_2FA' && method === 'sms') {
+        if (!recipient.phoneNumber) {
+          return false;
+        }
+
+        return await validateTwoFactorTokenFromPhone({
+          envelopeId: recipient.envelopeId,
+          phoneNumber: recipient.phoneNumber,
           code: token,
           window: 10, // 5 minutes worth of tokens
         });

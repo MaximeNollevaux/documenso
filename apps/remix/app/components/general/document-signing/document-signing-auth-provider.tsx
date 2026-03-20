@@ -26,7 +26,7 @@ type PasskeyData = {
 
 type SigningAuthRecipient = Pick<
   Recipient,
-  'authOptions' | 'email' | 'role' | 'name' | 'token' | 'id'
+  'authOptions' | 'email' | 'role' | 'name' | 'token' | 'id' | 'phoneNumber'
 >;
 
 export type DocumentSigningAuthContextValue = {

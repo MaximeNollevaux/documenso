@@ -1089,7 +1089,7 @@ export const ApiContractV1Implementation = tsr.router(ApiContractV1, {
 
   createRecipient: authenticatedMiddleware(async (args, user, team, { logger, metadata }) => {
     const { id: documentId } = args.params;
-    const { name, email, role, authOptions, signingOrder } = args.body;
+    const { name, email, phoneNumber, role, authOptions, signingOrder } = args.body;
 
     logger.info({
       input: {
@@ -1163,6 +1163,7 @@ export const ApiContractV1Implementation = tsr.router(ApiContractV1, {
           {
             email,
             name,
+            phoneNumber,
             role,
             signingOrder,
             actionAuth: authOptions?.actionAuth ?? [],
@@ -1197,7 +1198,7 @@ export const ApiContractV1Implementation = tsr.router(ApiContractV1, {
 
   updateRecipient: authenticatedMiddleware(async (args, user, team, { logger, metadata }) => {
     const { id: documentId, recipientId } = args.params;
-    const { name, email, role, authOptions, signingOrder } = args.body;
+    const { name, email, phoneNumber, role, authOptions, signingOrder } = args.body;
 
     logger.info({
       input: {
@@ -1248,6 +1249,7 @@ export const ApiContractV1Implementation = tsr.router(ApiContractV1, {
           id: Number(recipientId),
           email,
           name,
+          phoneNumber,
           role,
           signingOrder,
           actionAuth: authOptions?.actionAuth ?? [],

@@ -29,6 +29,13 @@ export const request2FAEmailRateLimit = createRateLimit({
   window: '15m',
 });
 
+export const request2FASmsRateLimit = createRateLimit({
+  action: 'auth.request-2fa-sms',
+  max: 3,
+  globalMax: 10,
+  window: '15m',
+});
+
 // ---- Auth (Tier 2 - Unauthenticated) ----
 
 export const loginRateLimit = createRateLimit({
