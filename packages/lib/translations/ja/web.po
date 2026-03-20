@@ -1597,6 +1597,7 @@ msgstr "このメールアドレスはすでに存在します。"
 #: apps/remix/app/components/general/claim-account.tsx
 #: apps/remix/app/components/general/document-signing/access-auth-2fa-form.tsx
 #: apps/remix/app/components/general/document-signing/access-auth-2fa-form.tsx
+#: apps/remix/app/components/general/document-signing/access-auth-2fa-form.tsx
 #: apps/remix/app/routes/_authenticated+/admin+/organisations.$id.tsx
 #: apps/remix/app/routes/_authenticated+/admin+/organisations.$id.tsx
 #: apps/remix/app/routes/_authenticated+/o.$orgUrl.settings.groups.$id.tsx
@@ -9148,6 +9149,10 @@ msgstr "サイト設定"
 msgid "Skip"
 msgstr "スキップ"
 
+#: apps/remix/app/components/general/document-signing/access-auth-2fa-form.tsx
+msgid "SMS verification"
+msgstr ""
+
 #: packages/ui/primitives/document-flow/missing-signature-field-dialog.tsx
 msgid "Some signers have not been assigned a signature field. Please assign at least 1 signature field to each signer before proceeding."
 msgstr "一部の署名者に署名フィールドが割り当てられていません。続行する前に、各署名者に少なくとも 1 つの署名フィールドを割り当ててください。"
@@ -11800,9 +11805,12 @@ msgid "We encountered an unknown error while attempting to remove this user. Ple
 msgstr "このユーザーの削除中に不明なエラーが発生しました。後でもう一度お試しください。"
 
 #: apps/remix/app/components/general/document-signing/access-auth-2fa-form.tsx
-#: apps/remix/app/components/general/document-signing/access-auth-2fa-form.tsx
 msgid "We encountered an unknown error while attempting to request the two-factor authentication code. Please try again later."
 msgstr "二要素認証コードのリクエスト中に不明なエラーが発生しました。後でもう一度お試しください。"
+
+#: apps/remix/app/components/general/document-signing/access-auth-2fa-form.tsx
+msgid "We encountered an unknown error while attempting to resend the verification code. Please try again later."
+msgstr ""
 
 #: apps/remix/app/components/forms/reset-password.tsx
 msgid "We encountered an unknown error while attempting to reset your password. Please try again later."
@@ -11811,6 +11819,10 @@ msgstr "パスワードのリセット中に不明なエラーが発生しまし
 #: apps/remix/app/components/general/teams/team-email-usage.tsx
 msgid "We encountered an unknown error while attempting to revoke access. Please try again or contact support."
 msgstr "アクセスの取り消し中に不明なエラーが発生しました。もう一度お試しになるか、サポートまでお問い合わせください。"
+
+#: apps/remix/app/components/general/document-signing/access-auth-2fa-form.tsx
+msgid "We encountered an unknown error while attempting to send the SMS verification code. Please try again later."
+msgstr ""
 
 #: apps/remix/app/components/forms/signin.tsx
 #: apps/remix/app/components/forms/signin.tsx
@@ -11976,6 +11988,10 @@ msgstr "署名フィールドを見つけて、誰が署名する必要がある
 msgid "We'll send a 6-digit code to your email"
 msgstr "6桁のコードをメールアドレス宛てに送信します"
 
+#: apps/remix/app/components/general/document-signing/access-auth-2fa-form.tsx
+msgid "We'll send a 6-digit code to your phone"
+msgstr ""
+
 #: apps/remix/app/components/tables/documents-table-empty-state.tsx
 #: apps/remix/app/routes/_authenticated+/t.$teamUrl+/templates._index.tsx
 msgid "We're all empty"
@@ -11992,6 +12008,10 @@ msgstr "ご要望どおりパスワードを変更しました。新しいパス
 #: apps/remix/app/components/general/document-signing/access-auth-2fa-form.tsx
 msgid "We've sent a 6-digit verification code to your email. Please enter it below to complete the document."
 msgstr "6桁の認証コードをメールで送信しました。文書を完了するには、以下にコードを入力してください。"
+
+#: apps/remix/app/components/general/document-signing/access-auth-2fa-form.tsx
+msgid "We've sent a 6-digit verification code to your phone via SMS. Please enter it below to complete the document."
+msgstr ""
 
 #: apps/remix/app/components/general/verify-email-banner.tsx
 msgid "We've sent a confirmation email to <0>{email}</0>. Please check your inbox and click the link in the email to verify your account."
@@ -13230,4 +13250,3 @@ msgstr "認証コード:"
 #: apps/remix/app/routes/_authenticated+/o.$orgUrl.settings.sso.tsx
 msgid "your-domain.com another-domain.com"
 msgstr "your-domain.com another-domain.com"
-
