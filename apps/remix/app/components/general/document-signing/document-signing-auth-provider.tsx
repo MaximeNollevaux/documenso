@@ -26,8 +26,8 @@ type PasskeyData = {
 
 type SigningAuthRecipient = Pick<
   Recipient,
-  'authOptions' | 'email' | 'role' | 'name' | 'token' | 'id' | 'phoneNumber'
->;
+  'authOptions' | 'email' | 'role' | 'name' | 'token' | 'id'
+> & { phoneNumber?: string | null };
 
 export type DocumentSigningAuthContextValue = {
   executeActionAuthProcedure: (_value: ExecuteActionAuthProcedureOptions) => Promise<void>;

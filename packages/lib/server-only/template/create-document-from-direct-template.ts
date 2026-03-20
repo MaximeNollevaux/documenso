@@ -236,6 +236,7 @@ export const createDocumentFromDirectTemplate = async ({
           authOptions: directTemplateRecipient.authOptions,
           email: directRecipientEmail,
           envelopeId: directTemplateEnvelope.id,
+          phoneNumber: directTemplateRecipient.phoneNumber ?? null,
         },
         field: templateField,
         userId: user?.id,

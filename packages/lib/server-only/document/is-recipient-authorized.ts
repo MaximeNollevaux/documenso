@@ -20,7 +20,7 @@ type IsRecipientAuthorizedOptions = {
   // !: Probably find a better name than 'ACCESS_2FA' if requirements change.
   type: 'ACCESS' | 'ACCESS_2FA' | 'ACTION';
   documentAuthOptions: Envelope['authOptions'];
-  recipient: Pick<Recipient, 'authOptions' | 'email' | 'envelopeId' | 'phoneNumber'>;
+  recipient: Pick<Recipient, 'authOptions' | 'email' | 'envelopeId'> & { phoneNumber?: string | null };
 
   /**
    * The ID of the user who initiated the request.

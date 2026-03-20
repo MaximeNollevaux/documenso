@@ -105,6 +105,7 @@ export const ZEnvelopeForSigningResponse = z.object({
     signingStatus: true,
     email: true,
     name: true,
+    phoneNumber: true,
     documentDeletedAt: true,
     expiresAt: true,
     expirationNotifiedAt: true,
