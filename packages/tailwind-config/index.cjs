@@ -67,19 +67,22 @@ module.exports = {
           DEFAULT: 'hsl(var(--widget))',
           foreground: 'hsl(var(--widget-foreground))',
         },
+        // Dore Synara (#C8A35F) : l'ecran de signature est vu par les clients
+        // des activites, pas par nous — il porte donc leurs couleurs, pas le
+        // vert d'origine de Documenso.
         documenso: {
-          DEFAULT: '#A2E771',
+          DEFAULT: '#C8A35F',
           50: '#FFFFFF',
-          100: '#FDFFFD',
-          200: '#E7F9DA',
-          300: '#D0F3B7',
-          400: '#B9ED94',
-          500: '#A2E771',
-          600: '#83DF41',
-          700: '#66C622',
-          800: '#4D9619',
-          900: '#356611',
-          950: '#284E0D',
+          100: '#FDFAF4',
+          200: '#F5EBD9',
+          300: '#EBD9B8',
+          400: '#D9BE8B',
+          500: '#C8A35F',
+          600: '#B08A46',
+          700: '#8F6F38',
+          800: '#6D552B',
+          900: '#4B3A1D',
+          950: '#332714',
         },
         dawn: {
           DEFAULT: '#aaa89f',
