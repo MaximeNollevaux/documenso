@@ -1597,6 +1597,7 @@ msgstr "Ya existe un correo electrónico con esta dirección."
 #: apps/remix/app/components/general/claim-account.tsx
 #: apps/remix/app/components/general/document-signing/access-auth-2fa-form.tsx
 #: apps/remix/app/components/general/document-signing/access-auth-2fa-form.tsx
+#: apps/remix/app/components/general/document-signing/access-auth-2fa-form.tsx
 #: apps/remix/app/routes/_authenticated+/admin+/organisations.$id.tsx
 #: apps/remix/app/routes/_authenticated+/admin+/organisations.$id.tsx
 #: apps/remix/app/routes/_authenticated+/o.$orgUrl.settings.groups.$id.tsx
@@ -9148,6 +9149,10 @@ msgstr "Configuraciones del sitio"
 msgid "Skip"
 msgstr "Omitir"
 
+#: apps/remix/app/components/general/document-signing/access-auth-2fa-form.tsx
+msgid "SMS verification"
+msgstr ""
+
 #: packages/ui/primitives/document-flow/missing-signature-field-dialog.tsx
 msgid "Some signers have not been assigned a signature field. Please assign at least 1 signature field to each signer before proceeding."
 msgstr "Algunos firmantes no han sido asignados a un campo de firma. Asigne al menos 1 campo de firma a cada firmante antes de continuar."
@@ -11800,9 +11805,12 @@ msgid "We encountered an unknown error while attempting to remove this user. Ple
 msgstr "Encontramos un error desconocido al intentar eliminar a este usuario. Por favor, inténtalo de nuevo más tarde."
 
 #: apps/remix/app/components/general/document-signing/access-auth-2fa-form.tsx
-#: apps/remix/app/components/general/document-signing/access-auth-2fa-form.tsx
 msgid "We encountered an unknown error while attempting to request the two-factor authentication code. Please try again later."
 msgstr "Se encontró un error desconocido mientras se intentaba solicitar el código de autenticación de dos factores. Por favor, inténtelo de nuevo más tarde."
+
+#: apps/remix/app/components/general/document-signing/access-auth-2fa-form.tsx
+msgid "We encountered an unknown error while attempting to resend the verification code. Please try again later."
+msgstr ""
 
 #: apps/remix/app/components/forms/reset-password.tsx
 msgid "We encountered an unknown error while attempting to reset your password. Please try again later."
@@ -11811,6 +11819,10 @@ msgstr "Encontramos un error desconocido al intentar restablecer tu contraseña.
 #: apps/remix/app/components/general/teams/team-email-usage.tsx
 msgid "We encountered an unknown error while attempting to revoke access. Please try again or contact support."
 msgstr "Encontramos un error desconocido al intentar revocar el acceso. Por favor, inténtalo de nuevo o contacta con soporte."
+
+#: apps/remix/app/components/general/document-signing/access-auth-2fa-form.tsx
+msgid "We encountered an unknown error while attempting to send the SMS verification code. Please try again later."
+msgstr ""
 
 #: apps/remix/app/components/forms/signin.tsx
 #: apps/remix/app/components/forms/signin.tsx
@@ -11976,6 +11988,10 @@ msgstr "Escanearemos tu documento para encontrar campos de firma e identificar q
 msgid "We'll send a 6-digit code to your email"
 msgstr "Enviaremos un código de 6 dígitos a su correo electrónico"
 
+#: apps/remix/app/components/general/document-signing/access-auth-2fa-form.tsx
+msgid "We'll send a 6-digit code to your phone"
+msgstr ""
+
 #: apps/remix/app/components/tables/documents-table-empty-state.tsx
 #: apps/remix/app/routes/_authenticated+/t.$teamUrl+/templates._index.tsx
 msgid "We're all empty"
@@ -11992,6 +12008,10 @@ msgstr "Hemos cambiado tu contraseña como solicitaste. Ahora puedes iniciar ses
 #: apps/remix/app/components/general/document-signing/access-auth-2fa-form.tsx
 msgid "We've sent a 6-digit verification code to your email. Please enter it below to complete the document."
 msgstr "Hemos enviado un código de verificación de 6 dígitos a su correo electrónico. Por favor, introdúzcalo a continuación para completar el documento."
+
+#: apps/remix/app/components/general/document-signing/access-auth-2fa-form.tsx
+msgid "We've sent a 6-digit verification code to your phone via SMS. Please enter it below to complete the document."
+msgstr ""
 
 #: apps/remix/app/components/general/verify-email-banner.tsx
 msgid "We've sent a confirmation email to <0>{email}</0>. Please check your inbox and click the link in the email to verify your account."
@@ -13230,4 +13250,3 @@ msgstr "Su código de verificación:"
 #: apps/remix/app/routes/_authenticated+/o.$orgUrl.settings.sso.tsx
 msgid "your-domain.com another-domain.com"
 msgstr "su-dominio.com otro-dominio.com"
-
