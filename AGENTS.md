@@ -1,3 +1,15 @@
+﻿<!-- renvoi-contexte-synara -->
+> **Contexte commun — a lire avant ce fichier.** Il n'est PAS charge tout seul
+> depuis un depot : ouvre-le maintenant avec ta capacite de lecture.
+>
+>     C:\Users\maxime\.agents\synara-context.md
+>
+> Il porte les regles globales, ou lire l'index de la memoire partagee,
+> l'architecture du VPS et l'endroit ou trouver les cles. Claude Code le recoit
+> deja par `~/CLAUDE.md` ; Codex et les autres doivent l'ouvrir.
+>
+> Renvoi pose par ~/poste-synara/agents/sync-agent-context.ps1 — ne pas editer a la main.
+
 # Agent Guidelines for Documenso
 
 ## Build/Test/Lint Commands
@@ -57,3 +69,4 @@
 - Use `(params: Route.Params)` and `(loaderData: Route.LoaderData)` for routes
 - Directly return data from loaders, don't use `json()`
 - Use `superLoaderJson` when sending complex data through loaders such as dates or prisma decimals
+
