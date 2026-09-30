@@ -70,3 +70,29 @@
 - Directly return data from loaders, don't use `json()`
 - Use `superLoaderJson` when sending complex data through loaders such as dates or prisma decimals
 
+## Livraison — les trois etages
+
+Detail commun et pieges : `~/CLAUDE.md`, section
+« Deploiement des applications — les TROIS etages ».
+
+1. **Localhost** — port fixe inscrit dans le `package.json` et au registre
+   `C:\Users\maxime\portail-dev\projets.json` ; portail `http://localhost:3999`.
+2. **Dev sur fab** — `https://dev.<hote de prod>`, code synchronise par Mutagen :
+   ```bash
+   ssh fab "sudo dev-app list"              # ce qui tourne
+   ssh fab "sudo dev-app up documenso"
+   bash ~/poste-synara/fab/dev-init.sh documenso <hotes> <memoire-Go>   # 1re fois
+   ```
+   ⚠ Cette zone utilise la base de **PRODUCTION** : toute action y touche de
+   vraies donnees clientes.
+3. **Production** :
+
+```bash
+git push   # ⚠ ce depot deploie ENCORE par GitHub Actions (releve du 2026-09-30)
+ssh vps "docker logs documenso-app --tail 50 -f"
+```
+
+⚠ Depot pas encore bascule vers fab. Les trois pieges de GitHub Actions
+s'appliquent (une annulation sort avec 0, file de runners partagee, limite
+d'API) : verifier le `conclusion` du run **et** que le conteneur a redemarre.
+Bascule : `~/CLAUDE.md`, « Basculer une application restante ».
